@@ -78,6 +78,40 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void MainWindow::resizeEvent(QResizeEvent *event)
+{
+    Q_UNUSED(event);
+
+    qDebug() << endl << "Window Resize:" << this->size();
+
+    // 屏幕长宽
+    QList<QScreen*> scr = QGuiApplication::screens();
+    QRect rect = scr.at(0)->geometry();
+    quint32 desktop_wid = rect.width();
+    quint32 desktop_hei = rect.height();
+
+    // 根据不同屏幕分辨率, 调节字体大小
+    QString style_str;
+    QString label_str;
+    QString radio_str;
+    if (desktop_wid >= 1280 && desktop_hei >= 720) {
+        qDebug() << "1280*720";
+        style_str = QString("font: 20pt \"WenQuanYi Micro Hei Mono\";");
+        label_str = QString("font: 60pt \"WenQuanYi Micro Hei Mono\";");
+        radio_str = QString("QRadioButton { font: 30pt \"WenQuanYi Micro Hei Mono\"; }");
+    } else if (desktop_wid >= 800 && desktop_hei >= 600) {
+        qDebug() << "800*600";
+        style_str = QString("font: 10pt \"WenQuanYi Micro Hei Mono\";");
+        label_str = QString("font: 20pt \"WenQuanYi Micro Hei Mono\";");
+        radio_str = QString("QRadioButton { font: 10pt \"WenQuanYi Micro Hei Mono\"; }");
+    }
+
+    this->setStyleSheet(radio_str);
+    ui->label->setStyleSheet(label_str);
+    ui->pushButton->setStyleSheet(style_str);
+    ui->pushButton_2->setStyleSheet(style_str);
+}
+
 void MainWindow::on_pushButton_2_clicked()
 {
     close();

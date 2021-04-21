@@ -4,6 +4,10 @@
 #include <QMainWindow>
 #include <QRadioButton>
 
+#include <QDebug>
+#include <QScreen>
+#include <QResizeEvent>
+
 namespace Ui {
 class MainWindow;
 }
@@ -42,6 +46,9 @@ private slots:
     void on_pushButton_2_clicked();
 
     void on_pushButton_clicked();
+
+protected:
+    void resizeEvent(QResizeEvent *event);
 
 private:
     Ui::MainWindow *ui;
